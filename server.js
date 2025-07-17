@@ -4,6 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 import movimientoRoutes from './routes/movimientoRoutes.js';
+import categoriaRoutes from './routes/categoriaRoutes.js';
 
 dotenv.config();//variables del archivo .env
 
@@ -12,6 +13,7 @@ app.use(cors());//usa middleware cors
 app.use(express.json());//para que express entienda json
 
 app.use("/api/movimientos", movimientoRoutes);
+app.use("/api/categorias", categoriaRoutes);
 
 const PORT = process.env.PORT || 5000;
 
