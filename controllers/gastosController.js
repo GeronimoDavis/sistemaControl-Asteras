@@ -1,5 +1,5 @@
 import Gasto from '../models/gastosModel.js';
-import Categoria from '../models/categoriaModel.js';
+import Categoria from '../models/categoriaGastosModel.js';
 
 export const createGasto = async (req, res) =>{
     try{
@@ -16,7 +16,7 @@ export const createGasto = async (req, res) =>{
             categoria
         });
         await nuevoGasto.save();
-        res.satatus(201).json(nuevoGasto);
+        res.status(201).json(nuevoGasto);
     }catch(err){
         res.status(500).json({ message: "Error al crear el gasto", error: err.message });
     }
