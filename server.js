@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
-import movimientoRoutes from './routes/movimientoRoutes.js';
+import ventaRoutes from './routes/ventasRoutes.js';
 import categoriaRoutes from './routes/categoriaRoutes.js';
 
 dotenv.config();//variables del archivo .env
@@ -12,8 +12,8 @@ const app = express();//instancia de express
 app.use(cors());//usa middleware cors
 app.use(express.json());//para que express entienda json
 
-app.use("/api/movimientos", movimientoRoutes);
 app.use("/api/categorias", categoriaRoutes);
+app.use("/api/ventas", ventaRoutes);//rutas de ventas
 
 const PORT = process.env.PORT || 5000;
 
