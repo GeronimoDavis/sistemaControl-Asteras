@@ -20,4 +20,5 @@ const VentaSchema = new mongoose.Schema({
     }
 });
 
-export default mongoose.model("Venta", VentaSchema);
+const Venta = mongoose.model("Venta", VentaSchema);
+export default Venta;

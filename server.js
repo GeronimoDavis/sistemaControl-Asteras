@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import ventaRoutes from './routes/ventaRoutes.js';
 import categoriaGastosRoutes from './routes/categoriaGastosRoutes.js';
 import gastosRoutes from './routes/gastosRoutes.js';
+import categoriaProductoRoutes from './routes/categoriaProductoRoutes.js';
 
 dotenv.config();//variables del archivo .env
 
@@ -16,6 +17,7 @@ app.use(express.json());//para que express entienda json
 app.use("/api/categoriaGastos", categoriaGastosRoutes);
 app.use("/api/ventas", ventaRoutes);//rutas de ventas
 app.use("/api/gastos", gastosRoutes);//rutas de gastos
+app.use("/api/categoriaProductos", categoriaProductoRoutes);//rutas de categorias de productos
 
 const PORT = process.env.PORT || 5000;
 

@@ -21,4 +21,5 @@ const GastosSchema = new mongoose.Schema({
     }
 });
 
-export default mongoose.model('Gasto', GastosSchema);
+const Gasto = mongoose.model('Gasto', GastosSchema);
+export default Gasto;

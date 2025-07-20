@@ -31,7 +31,10 @@ export const updateCategoriaGasto = async (req, res) => {
     try{
         const {id} = req.params;
         const {nombre} = req.body;
-
+        const existe = await Categoria.findOne({ nombre });
+        if(existe && existe._id.toString() !== id){//Si ya existe otro documento con ese nombre y no es el mismo que estoy editando tiro error
+            return res.status(400).json({ message: "La categoría del gasto ya existe" });
+        }
         const categoria = await Categoria.findByIdAndUpdate(
             id,
             { nombre },
