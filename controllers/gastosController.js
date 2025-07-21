@@ -52,7 +52,7 @@ export const updateGasto = async (req, res) => {
             id,
             {descripcion, monto, categoria},
             {new: true}
-        );
+        ).populate('categoria');
 
         if(!gastoActualizado){
             return res.status(404).json({ message: "Gasto no encontrado" });

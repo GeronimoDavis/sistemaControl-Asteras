@@ -2,8 +2,7 @@ import express from "express";
 import { createVenta, 
         getAllVentas, 
         getVentaById, 
-        updateVenta, 
-        deleteVenta 
+        updateVenta 
 } 
 from "../controllers/ventaController.js";
 
@@ -13,6 +12,6 @@ routes.post('/', createVenta);
 routes.get('/', getAllVentas);
 routes.get('/:id', getVentaById);
 routes.put('/:id', updateVenta);
-routes.delete('/:id', deleteVenta);
+
 
 export default routes;

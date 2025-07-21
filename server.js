@@ -7,6 +7,7 @@ import ventaRoutes from './routes/ventaRoutes.js';
 import categoriaGastosRoutes from './routes/categoriaGastosRoutes.js';
 import gastosRoutes from './routes/gastosRoutes.js';
 import categoriaProductoRoutes from './routes/categoriaProductoRoutes.js';
+import productoRoutes from './routes/productoRoutes.js';
 
 dotenv.config();//variables del archivo .env
 
@@ -18,6 +19,7 @@ app.use("/api/categoriaGastos", categoriaGastosRoutes);
 app.use("/api/ventas", ventaRoutes);//rutas de ventas
 app.use("/api/gastos", gastosRoutes);//rutas de gastos
 app.use("/api/categoriaProductos", categoriaProductoRoutes);//rutas de categorias de productos
+app.use("/api/productos", productoRoutes);//rutas de productos
 
 const PORT = process.env.PORT || 5000;
 
