@@ -90,3 +90,21 @@ export const updateStockProducto = async (req, res) =>{
         res.status(500).json({ message: "Error al actualizar el stock del producto", error: err.message });
     }
 }
+
+//filtrar productos por categoría
+ 
+export const getProductosByCategoria = async (req, res) => {
+  try {
+    const { idCategoria } = req.params;
+    const existe = await CategoriaProducto.findById(idCategoria);
+    if(!existe){
+        return res.status(400).json({ message: "La categoría del producto no existe" });
+    }
+    const productos = await ProductoModel.find({ categoriaProducto: idCategoria }).populate('categoriaProducto');
+    res.status(200).json(productos);
+
+
+  } catch (error) {
+      res.status(500).json({ message: "Error al obtener productos por categoría", error: error.message });
+  }
+};
