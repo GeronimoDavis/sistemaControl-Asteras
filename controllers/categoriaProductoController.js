@@ -3,6 +3,11 @@ import CategoriaProducto from "../models/categoriaProductoModel.js";
 export const createCategoriaProducto = async (req, res) =>{
     try{
         const {nombre} = req.body;
+
+        //validaciones
+        if(!nombre || typeof nombre !== "string" || nombre.trim() === ""){
+            return res.status(400).json({ message: "El nombre de la categoría del producto es obligatorio y debe ser una cadena de texto válida" });
+        }
         const existe = await CategoriaProducto.findOne({ nombre });
         if(existe){
             return res.status(400).json({ message: "La categoría del producto ya existe" });
@@ -29,6 +34,15 @@ export const updateCategoriaProducto = async (req, res) => {
     try{
         const {id} = req.params;
         const {nombre} = req.body;
+
+        //validaciones
+        if(!id || !mongoose.Types.ObjectId.isValid(id)){
+            return res.status(400).json({ message: "ID de categoría no válido" });
+        }
+        if(!nombre || typeof nombre !== "string" || nombre.trim() === ""){
+            return res.status(400).json({ message: "El nombre de la categoría del producto es obligatorio y debe ser una cadena de texto válida" });
+        }
+
         const existe = await CategoriaProducto.findOne({ nombre });
         if(existe && existe._id.toString() !== id){//Si ya existe otro documento con ese nombre y no es el mismo que estoy editando tiro error
             return res.status(400).json({ message: "La categoría del producto ya existe" });

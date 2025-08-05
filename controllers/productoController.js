@@ -9,7 +9,7 @@ export const createProducto = async (req, res) =>{
 
         //validaciones 
         
-        if(!nombre || typeof nombre !== "string" || nombre.trim() === " "){
+        if(!nombre || typeof nombre !== "string" || nombre.trim() === ""){
             return res.status(400).json({ message: "El nombre del producto es obligatorio y debe ser una cadena de texto válida" });
         }
 
@@ -93,7 +93,7 @@ export const updateProducto = async (req, res) => {
 
         //validaciones
 
-        if(!nombre || typeof nombre !== "string" || nombre.trim() === " "){
+        if(!nombre || typeof nombre !== "string" || nombre.trim() === ""){
             return res.status(400).json({ message: "El nombre del producto es obligatorio y debe ser una cadena de texto válida" });
         }
 
