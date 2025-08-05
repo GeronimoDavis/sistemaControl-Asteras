@@ -4,6 +4,20 @@ import Producto from '../models/productoModel.js';
 export const createVenta = async (req, res) => {
     try {
         const { producto, cantidad, precioUnitario } = req.body;
+
+        //validaciones
+        if(!producto || !mongoose.Types.ObjectId.isValid(producto)){
+            return res.status(400).json({ message: "ID de producto no válido" });   
+        }
+
+        if(cantidad == null || isNaN(cantidad) || cantidad <= 0 || !Number.isInteger(cantidad)){
+            return res.status(400).json({ message: "La cantidad es obligatoria y debe ser un número entero mayor a 0" });
+        }
+
+        if(precioUnitario == null || isNaN(precioUnitario) || precioUnitario < 0){
+            return res.status(400).json({ message: "El precio unitario es obligatorio y debe ser un número mayor o igual a 0" });
+        }
+
         const productoExiste = await Producto.findById(producto);
         if (!productoExiste) {
             return res.status(404).json({ message: "Producto no encontrado" });
@@ -45,6 +59,10 @@ export const getAllVentas = async (req, res) => {
 export const getVentaById = async (req, res) => {
     try{
         const {id} = req.params;
+        //validaciones
+        if(!mongoose.Types.ObjectId.isValid(id)){
+            return res.status(400).json({ message: "ID de venta no válido" });
+        }
         const venta = await Venta.findById(id).populate('producto');
         if (!venta) {
             return res.status(404).json({ message: "Venta no encontrada" });
@@ -59,7 +77,24 @@ export const updateVenta = async (req, res) => {
     try {
         const {id} = req.params;
         const {producto, cantidad, precioUnitario} = req.body;
-        
+        //validaciones
+
+        if(!mongoose.Types.ObjectId.isValid(id)){
+            return res.status(400).json({ message: "ID de venta no válido" });
+        }
+
+        if(!producto || !mongoose.Types.ObjectId.isValid(producto)){
+            return res.status(400).json({ message: "ID de producto no válido" });
+        }
+
+        if(cantidad == null || isNaN(cantidad) || cantidad <= 0 || !Number.isInteger(cantidad)){
+            return res.status(400).json({ message: "La cantidad es obligatoria y debe ser un número entero mayor a 0" });
+        }
+
+        if(precioUnitario == null || isNaN(precioUnitario) || precioUnitario < 0){
+            return res.status(400).json({ message: "El precio unitario es obligatorio y debe ser un número mayor o igual a 0" });
+        }
+
         //venta original
         const ventaOriginal = await Venta.findById(id);
         if (!ventaOriginal) {

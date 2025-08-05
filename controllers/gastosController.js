@@ -4,7 +4,20 @@ import Categoria from '../models/categoriaGastosModel.js';
 export const createGasto = async (req, res) =>{
     try{
         const {descripcion, monto, categoria} = req.body;
-        
+        //validaciones
+
+        if(typeof descripcion !== "string" || descripcion.trim() === ""){
+            return res.status(400).json({ message: "La descripción del gasto debe ser una cadena de texto válida" });
+        }
+
+        if(monto == null || isNaN(monto) || monto <= 0){
+            return res.status(400).json({ message: "El monto del gasto es obligatorio y debe ser un número mayor a 0" });
+        }
+
+        if(!categoria || !mongoose.Types.ObjectId.isValid(categoria)){
+            return res.status(400).json({ message: "ID de categoría no válido" });
+        }
+
         const cat = await Categoria.findById(categoria);
         if(!cat){
             return res.status(404).json({ message: "Categoría no encontrada" });
@@ -22,7 +35,7 @@ export const createGasto = async (req, res) =>{
     }
 }
 
-export const getAllGatos = async (req, res) => {
+export const getAllGastos = async (req, res) => {
     try{
         const gastos = await Gasto.find().populate('categoria').sort({ fecha: -1 });//Reemplaza el ObjectId de la categoría por el objeto completo de la categoría y los ordena por fecha descendente
         res.status(200).json(gastos);
@@ -34,7 +47,11 @@ export const getAllGatos = async (req, res) => {
 export const getGastoById = async (req,res) =>{
     try{
         const {id} = req.params;
-    const gasto = await Gasto.findById(id).populate('categoria');
+        //validaciones
+        if(!mongoose.Types.ObjectId.isValid(id)){
+            return res.status(400).json({ message: "ID de gasto no válido" });
+        }
+        const gasto = await Gasto.findById(id).populate('categoria');
         if(!gasto){
             return res.status(404).json({ message: "Gasto no encontrado" });
         }
@@ -48,6 +65,28 @@ export const updateGasto = async (req, res) => {
     try{
         const {id} = req.params;
         const {descripcion, monto, categoria} = req.body;
+
+        //validaciones
+        if(!mongoose.Types.ObjectId.isValid(id)){
+            return res.status(400).json({ message: "ID de gasto no válido" });
+        }
+
+        if(typeof descripcion !== "string" || descripcion.trim() === ""){
+            return res.status(400).json({ message: "La descripción del gasto debe ser una cadena de texto válida" });
+        }
+
+        if(monto == null || isNaN(monto) || monto <= 0){
+            return res.status(400).json({ message: "El monto del gasto es obligatorio y debe ser un número mayor a 0" });
+        }
+
+        if(!categoria || !mongoose.Types.ObjectId.isValid(categoria)){
+            return res.status(400).json({ message: "ID de categoría no válido" });
+        }
+
+        const cat = await Categoria.findById(categoria);
+        if(!cat){
+            return res.status(404).json({ message: "Categoría no encontrada" });
+        }
         const gastoActualizado = await Gasto.findByIdAndUpdate(
             id,
             {descripcion, monto, categoria},
@@ -66,6 +105,11 @@ export const updateGasto = async (req, res) => {
 export const deleteGasto = async (req, res) => {
     try{
         const {id} = req.params;
+
+        if(!mongoose.Types.ObjectId.isValid(id)){
+            return res.status(400).json({ message: "ID de gasto no válido" });
+        }
+        
         const gastoEliminado = await Gasto.findByIdAndDelete(id);//si no existe el gasto, devuelve null
         if(!gastoEliminado){
             return res.status(404).json({ message: "Gasto no encontrado" });

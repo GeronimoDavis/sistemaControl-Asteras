@@ -13,8 +13,8 @@ export const createProducto = async (req, res) =>{
             return res.status(400).json({ message: "El nombre del producto es obligatorio y debe ser una cadena de texto válida" });
         }
 
-        if(stock == null || isNaN(stock) || stock < 0){
-            return res.status(400).json({ message: "El stock del producto es obligatorio y debe ser un número mayor o igual a 0" });
+        if(stock == null || isNaN(stock) || stock < 0 || !Number.isInteger(stock)){
+            return res.status(400).json({ message: "El stock del producto es obligatorio y debe ser un número entero mayor o igual a 0" });
         }
 
         if(precioVenta == null || isNaN(precioVenta) || precioVenta < 0){
@@ -97,8 +97,8 @@ export const updateProducto = async (req, res) => {
             return res.status(400).json({ message: "El nombre del producto es obligatorio y debe ser una cadena de texto válida" });
         }
 
-        if(stock == null || isNaN(stock) || stock < 0){
-            return res.status(400).json({ message: "El stock del producto es obligatorio y debe ser un número mayor o igual a 0" });
+        if(stock == null || isNaN(stock) || stock < 0 || !Number.isInteger(stock)){
+            return res.status(400).json({ message: "El stock del producto es obligatorio y debe ser un número entero mayor o igual a 0" });
         }
         
         if(precioVenta == null || isNaN(precioVenta) || precioVenta < 0){
@@ -144,8 +144,8 @@ export const updateStockProducto = async (req, res) =>{
             return res.status(400).json({ message: "ID de producto no válido" });
         }
 
-        if(stock == null || isNaN(stock) || stock < 0){
-            return res.status(400).json({ message: "El stock del producto es obligatorio y debe ser un número mayor o igual a 0" });
+        if(stock == null || isNaN(stock) || stock < 0 || !Number.isInteger(stock)){
+            return res.status(400).json({ message: "El stock del producto es obligatorio y debe ser un número entero mayor o igual a 0" });
         }
         const productoActualizado = await ProductoModel.findByIdAndUpdate(id, { stock }, { new: true }).populate('categoriaProducto');
         res.status(200).json(productoActualizado);
