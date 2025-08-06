@@ -1,5 +1,6 @@
 import Venta from '../models/ventaModel.js';
 import Producto from '../models/productoModel.js';
+import mongoose from 'mongoose';
 
 export const createVenta = async (req, res) => {
     try {

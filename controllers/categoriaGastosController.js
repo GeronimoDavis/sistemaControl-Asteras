@@ -1,5 +1,5 @@
 import Categoria from "../models/categoriaGastosModel.js";
-
+import mongoose from "mongoose";
 export const createCategoriaGasto = async (req, res) => {
   try{
     const {nombre} = req.body;

@@ -1,6 +1,6 @@
 import Gasto from '../models/gastosModel.js';
 import Categoria from '../models/categoriaGastosModel.js';
-
+import mongoose from 'mongoose';
 export const createGasto = async (req, res) =>{
     try{
         const {descripcion, monto, categoria} = req.body;
@@ -109,7 +109,7 @@ export const deleteGasto = async (req, res) => {
         if(!mongoose.Types.ObjectId.isValid(id)){
             return res.status(400).json({ message: "ID de gasto no válido" });
         }
-        
+
         const gastoEliminado = await Gasto.findByIdAndDelete(id);//si no existe el gasto, devuelve null
         if(!gastoEliminado){
             return res.status(404).json({ message: "Gasto no encontrado" });
