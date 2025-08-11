@@ -14,7 +14,12 @@ import resumenRoutes from './routes/resumenRoutes.js';
 dotenv.config();//variables del archivo .env
 
 const app = express();//instancia de express
-app.use(cors());//usa middleware cors
+app.use(cors({
+    origin: "http://localhost:5173",//frontend permitido
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+
+}));//usa middleware cors
 app.use(express.json());//para que express entienda json
 
 // Routes
