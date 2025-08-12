@@ -17,7 +17,8 @@ const app = express();//instancia de express
 app.use(cors({
     origin: "http://localhost:5173",//frontend permitido
     methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"]
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true
 
 }));//usa middleware cors
 app.use(express.json());//para que express entienda json
