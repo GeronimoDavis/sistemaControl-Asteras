@@ -1,0 +1,59 @@
+.navbar{
+    position: fixed; 
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%; /* Ancho completo */
+    background-color: #333;
+    color: blueviolet;
+    padding: 10px 0; /* Espaciado vertical interno */
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.3); /* Sombra debajo del navbar */
+    z-index: 1000; /* Lo pone por encima de otros elementos */
+    margin: 0; /* Elimina cualquier margen */
+    box-sizing: border-box; /* Incluye padding en el ancho total */
+}
+
+.contenedor-navbar{
+    display: flex; /* Coloca elementos en una fila */
+    justify-content: space-between;
+    align-items: center; /* Centra verticalmente el contenido */
+    width: 100%; /* Ocupa todo el ancho disponible */
+    padding: 0 20px; /* Padding horizontal para el contenido */
+    box-sizing: border-box;
+}
+
+.logo {
+    font-size: 1.5rem; /* Tamaño de fuente más grande */
+    font-weight: bold; /* Texto en negrita */
+}
+
+.nav-links {
+    display: flex; /* Asegura que los enlaces estén en fila */
+    gap: 20px; /* Espacio entre enlaces */
+    align-items: center;
+}
+
+.nav-links a {
+    color: blueviolet; /* Texto en color violeta */
+    text-decoration: none; /* Quita el subrayado */
+    font-size: 1rem; /* Tamaño de texto normal */
+    transition: color 0.2s ease; /* Transición suave al cambiar color */
+    padding: 5px 10px; /* Padding para mejor área de clic */
+}
+
+.nav-links a:hover {
+    color: #812997; /* Cambia a color violeta más oscuro al pasar el mouse */
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none; /* Oculta el menú en pantallas pequeñas */
+    }
+    
+    .contenedor-navbar {
+        padding: 0 10px;
+    }
+}
+   
+
