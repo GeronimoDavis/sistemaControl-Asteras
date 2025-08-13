@@ -18,8 +18,8 @@ app.use(cors({
     origin: "http://localhost:5173",//frontend permitido
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true
-
+    credentials: true,
+    optionsSuccessStatus: 200
 }));//usa middleware cors
 app.use(express.json());//para que express entienda json
 
