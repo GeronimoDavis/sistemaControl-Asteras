@@ -15,4 +15,10 @@ export const getCategoriasGastos = () => API.get('/categoriaGastos');
 export const createCategoriaGasto = (nombre) => API.post('/categoriaGastos', { nombre });
 export const updateCategoriaGasto = (id, nombre) => API.put(`/categoriaGastos/${id}`, { nombre });
 
+//funciones de Productos
+
+export const  getAllProductos = () => API.get("/productos");
+export const getProductoById = () => API.get(`producto/${id}`, {nombre} );
+
+
 export default API;
