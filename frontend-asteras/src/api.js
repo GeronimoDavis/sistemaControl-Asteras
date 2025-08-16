@@ -18,7 +18,9 @@ export const updateCategoriaGasto = (id, nombre) => API.put(`/categoriaGastos/${
 //funciones de Productos
 
 export const  getAllProductos = () => API.get("/productos");
-export const getProductoById = () => API.get(`producto/${id}`, {nombre} );
-
+export const getProductoById = (id) => API.get(`productos/${id}`);
+export const createProducto = (productoData) => API.post("/productos",productoData);
+export const updateProducto = (id, productoData) => API.put(`productos/${id}`, productoData);
+export const updateStock = (id, stock) => API.patch(`/productos/${id}/stock`, stock);
 
 export default API;

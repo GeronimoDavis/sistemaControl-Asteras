@@ -15,6 +15,7 @@ const Categorias = () => {
     const [nombre, setNombre] = useState("");
     const [categorias, setCategorias] = useState([]);
     const [editId, setEditId] = useState(null);// id de la categoría que estamos editando
+    const [error, setError] = useState("");
 
     // Traer categorías según tipo
     useEffect(() => {
@@ -30,6 +31,7 @@ const Categorias = () => {
                 setEditId(null);
                 setNombre("");
             }catch(err){
+                useState("No se pudo encontrar las categorias");
                 console.error(err);
                 setCategorias([]); // En caso de error, establecer array vacío
             }
@@ -38,6 +40,8 @@ const Categorias = () => {
         fetchCategorias();
     }, [tipo]);
 
+    if(error) return <p>{error}</p>;
+    
     //Crear o actualizar categoria
     const handleSubmit = async (e) =>{
         e.preventDefault();

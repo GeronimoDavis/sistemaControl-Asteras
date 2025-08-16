@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { getAllProductos} from "../api";
+import { getAllProductos, updateStock} from "../api";
 import "../todoCss/stock.css";
 
 const Stock = () =>{
     const[productos, setProductos] = useState([]);
     const [busqueda, setBusqueda] = useState("");
+    const [error, setError] = useState("");
     
 
     //traemos el stock
@@ -15,17 +16,20 @@ const Stock = () =>{
                 setProductos(res.data || []);
                 
             }catch(error){
-                console.error("Error al obtener productos", error);
+                setError("No se pudo traer el stock")
+                console.error(error);
             }
         };
         fetchStock();
     },[]);// el segundo parametro [] significa que solo se ejecuta una vez cuando el componente se monta
 
+    if(error) return  <p>{error}</p>;
     //filtrar por nombre
 
     const productosFiltrados = productos.filter((p) =>
         p.nombre.toLowerCase().includes(busqueda.toLowerCase())
     );
+    // productosFiltrados es una variable que se calcula cada vez que el componente se renderiza
 
     return(
         <div className="stock-container">
