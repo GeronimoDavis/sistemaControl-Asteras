@@ -40,8 +40,8 @@ const Categorias = () => {
         fetchCategorias();
     }, [tipo]);
 
-    if(error) return <p>{error}</p>;
     
+
     //Crear o actualizar categoria
     const handleSubmit = async (e) =>{
         e.preventDefault();
@@ -85,6 +85,8 @@ const Categorias = () => {
         setEditId(categoria._id);
     }
 
+    if(error) return <p>{error}</p>;
+    
     return(
     <div className="categorias-container">
       <h2 className="categorias-titulo">Categorías</h2>
