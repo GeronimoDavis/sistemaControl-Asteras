@@ -155,3 +155,43 @@
 .tabla-stock tbody tr {
   animation: fadeIn 0.4s ease-out;
 }
+
+/* Estilos para los botones de editar y guardar */
+.btn-editar,
+.btn-guardar {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  color: #fff;
+}
+
+.btn-editar {
+  background-color: #4CAF50; /* Green */
+}
+
+.btn-editar:hover {
+  background-color: #45a049;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+}
+
+.btn-guardar {
+  background-color: #008CBA; /* Blue */
+}
+
+.btn-guardar:hover {
+  background-color: #007bb5;
+  box-shadow: 0 4px 12px rgba(0, 140, 186, 0.4);
+}
+
+.input-stock {
+  width: 80px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+  background-color: #333;
+  color: #fff;
+}

@@ -99,6 +99,7 @@ const Productos = () =>{
         });
     }
     
+    //simplemente se limpia la informacion 
     const handleCancel = () => {
         setEditId(null);
         setFormData({
@@ -164,7 +165,7 @@ const Productos = () =>{
                             className="input-producto"
                             name="precioVenta"
                             type="number"
-                            step="0.01"
+                            step="0.01"//el usuario puede ingresar números decimales con hasta 2 decimales de precisión
                             value={formData.precioVenta ?? ""}
                             onChange={handleChange}
                             placeholder="Precio de venta"
