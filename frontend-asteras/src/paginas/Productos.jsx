@@ -6,6 +6,7 @@ import { createProducto,
     getProductoById,
     updateStock, 
     getCategoriasProductos} from "../api";
+import "../todoCss/productos.css";
 
 const Productos = () =>{
     const [productos, setProductos] = useState([]);
@@ -29,7 +30,7 @@ const Productos = () =>{
                 setProductos(resProductos.data);
                 setCategorias(resCategorias.data);
             }catch(err){
-                setError("Error al crear el producto");
+                setError("Error al cargar los productos");
                 console.error(err);
             }
             
@@ -80,7 +81,7 @@ const Productos = () =>{
             const res = await getAllProductos();
             setProductos(res.data);
         }catch(err){
-            setError("Error al crear el producto");
+            setError("Error al recargar los productos");
             console.error(err);
         }
         
@@ -98,6 +99,17 @@ const Productos = () =>{
         });
     }
     
+    const handleCancel = () => {
+        setEditId(null);
+        setFormData({
+            nombre: "",
+            stock: "",
+            precioCompra: "",
+            precioVenta: "",
+            categoriaProducto: ""
+        });
+    };
+    
     //actualiza el estado formData cuando se escribe en un input del formulario
     const handleChange = (e) =>{
         setFormData({ ...formData, [e.target.name]: e.target.value});
@@ -107,81 +119,112 @@ const Productos = () =>{
     if (error) return <p>{error}</p>;
 
     return(
-        <div className="contenedor-productos">
-            <h2>{editId ? "Editar Producto" : "Crear Producto"}</h2>/*renderizado condicional*/
+        <div className="productos-container">
+            <h1 className="productos-titulo">{editId ? "Editar Producto" : "Crear Producto"}</h1>
             
-            <form onSubmit={handleSubmit}>
-                <input
-                    name="nombre"
-                    value={formData.nombre}
-                    onChange={handleChange}
-                    placeholder="Nombre"
-                />
-
-                <input
-                    name="stock"
-                    type="number"
-                    value={formData.stock ?? ""}
-                    onChange={handleChange}
-                    placeholder="Stock"
-                />
-
-                <input
-                    name="precioCompra"
-                    type="number"
-                    value={formData.precioCompra ?? ""}
-                    onChange={handleChange}
-                    placeholder="Precio de Compra"
-                />
-
-                <input
-                name="precioVenta"
-                type="number"
-                value={formData.precioVenta ?? ""}
-                onChange={handleChange}
-                placeholder="Precio de Venta"
-                className="border p-2 w-full"
-                />
-
-                {/* SELECT de categoría */}
+            {error && <div className="mensaje-error">{error}</div>}
             
-                <select
-                    name="categoriaProducto"
-                    value={formData.categoriaProducto}
-                    onChange={handleChange}
-                >
-                    <option value="">Seleccionar categoria</option>
-                    {categorias.map((cat) =>(/*recorre las categorías cargadas del backend y crea una opción por cada una*/
-                        <option key={cat._id} value={cat._id}>{cat.nombre}</option>
-                    ))}
-                </select>
-            <button
-                type="submit"
-            >
-                {editId ? "Actualizar" : "Crear"}
-            </button>
+            <div className="formulario-producto">
+                <h3>Información del Producto</h3>
+                <form onSubmit={handleSubmit}>
+                    <div className="input-grupo">
+                        <input
+                            className="input-producto"
+                            name="nombre"
+                            value={formData.nombre}
+                            onChange={handleChange}
+                            placeholder="Nombre del producto"
+                            required
+                        />
+                    </div>
 
-            </form>
+                    <div className="input-grupo">
+                        <input
+                            className="input-producto"
+                            name="stock"
+                            type="number"
+                            value={formData.stock ?? ""}
+                            onChange={handleChange}
+                            placeholder="Stock disponible"
+                            required
+                        />
+
+                        <input
+                            className="input-producto"
+                            name="precioCompra"
+                            type="number"
+                            step="0.01"
+                            value={formData.precioCompra ?? ""}
+                            onChange={handleChange}
+                            placeholder="Precio de compra"
+                            required
+                        />
+
+                        <input
+                            className="input-producto"
+                            name="precioVenta"
+                            type="number"
+                            step="0.01"
+                            value={formData.precioVenta ?? ""}
+                            onChange={handleChange}
+                            placeholder="Precio de venta"
+                            required
+                        />
+                    </div>
+
+                    <div className="input-grupo">
+                        <select
+                            className="select-categoria"
+                            name="categoriaProducto"
+                            value={formData.categoriaProducto}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="">Seleccionar categoría</option>
+                            {categorias.map((cat) =>(
+                                <option key={cat._id} value={cat._id}>{cat.nombre}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <button
+                        type="submit"
+                        className="btn-principal"
+                    >
+                        {editId ? "Actualizar Producto" : "Crear Producto"}
+                    </button>
+                    {editId && (
+                        <button
+                            type="button"
+                            className="btn-cancelar"
+                            onClick={handleCancel}
+                        >
+                            Cancelar Edición
+                        </button>
+                    )}
+                </form>
+            </div>
              
-            
-
-            <h2>Lista de productos</h2>
-            {productos.length === 0 ? (
-                <p>No hay productos cargados</p>
-            ) : (
-                <ul>
-                    {productos.map((p)=>(//recorre el array productos
-                    //key única para identificar cada elemento de la lista con el _id de mongo
-                        <li key={p._id}>
-                            <span>
-                                {p.nombre} - Stock: {p.stock} - ${p.precioVenta} - ${p.precioCompra} - Cat:{" "}
-                                {p.categoriaProducto?.nombre || "Sin categoria"}
-                            </span>
-                            <button onClick={() => handleEdit(p)}>Editar</button>
-                        </li>
-                    ))}
-                </ul>
-            )} 
+            <div className="lista-productos">
+                <h3>Lista de Productos</h3>
+                {productos.length === 0 ? (
+                    <p className="mensaje-vacio">No hay productos cargados</p>
+                ) : (
+                    <div>
+                        {productos.map((p) =>(
+                            <div key={p._id} className="producto-item">
+                                <div className="producto-info">
+                                    <div className="producto-nombre">{p.nombre}</div>
+                                    <div className="producto-detalles">
+                                        Stock: {p.stock} | Precio Venta: ${p.precioVenta} | Precio Compra: ${p.precioCompra} | Categoría: {p.categoriaProducto?.nombre || "Sin categoría"}
+                                    </div>
+                                </div>
+                                <button onClick={() => handleEdit(p)} className="btn-editar">Editar</button>
+                            </div>
+                        ))}
+                    </div>
+                )} 
+            </div>
         </div>
     )
 }
