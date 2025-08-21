@@ -23,4 +23,9 @@ export const createProducto = (productoData) => API.post("/productos",productoDa
 export const updateProducto = (id, productoData) => API.put(`productos/${id}`, productoData);
 export const updateStock = (id, stock) => API.patch(`/productos/${id}/stock`, { stock });
 
+//funciones de ventas
+export const getAllVentas = () => API.get("/ventas");
+export const createVentas = (ventaData) => API.post ("/ventas", ventaData);
+export const updateVentas = (id, ventaData) => API.get(`/ventas/${id}`, ventaData);
+
 export default API;
