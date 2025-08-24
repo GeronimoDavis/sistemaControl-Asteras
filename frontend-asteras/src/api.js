@@ -25,7 +25,15 @@ export const updateStock = (id, stock) => API.patch(`/productos/${id}/stock`, { 
 
 //funciones de ventas
 export const getAllVentas = () => API.get("/ventas");
+export const getVentaById = (id) => API.get(`/ventas/${id}`)
 export const createVentas = (ventaData) => API.post ("/ventas", ventaData);
-export const updateVentas = (id, ventaData) => API.get(`/ventas/${id}`, ventaData);
+export const updateVentas = (id, ventaData) => API.put(`/ventas/${id}`, ventaData);
+
+//funciones de gastos 
+export const getAllGastos = () => API.get("/gastos");
+export const getGastoByid = (id) => API.get(`/gastos/${id}`)
+export const createGasto = (gastoData) => API.post(`/gastos`, gastoData);
+export const updateGastos = (id, gastoData) => API.put(`/gastos/${id}`, gastoData);
+
 
 export default API;

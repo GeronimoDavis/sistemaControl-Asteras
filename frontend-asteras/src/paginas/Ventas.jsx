@@ -59,26 +59,67 @@ const Ventas = () =>{
 
     const handleSubmit = async (e) =>{
         e.preventDefault();
-        try{
+        if(editId){
+            //editar
+            try{
+                const dataToSend = {
+                    ...formData,
+                    cantidad: Number(formData.cantidad),
+                    precioUnitario: Number(formData.precioUnitario)
+                };
+                await updateVentas(editId, dataToSend);
+                setEditId(null);
 
-            const dataToSend = {
+            }catch(err){
+                setError("Error al actualizar la venta");
+                console.error(err);
+            }
+
+        }else{
+            try{
+                //crear
+                const dataToSend = {
                 ...formData,
                 cantidad: Number(formData.cantidad),
                 precioUnitario: Number(formData.precioUnitario) 
-            };
-            await createVentas(dataToSend)
+                };
+                await createVentas(dataToSend)
 
-            //Refrescamos lista de ventas
+            }catch(err){
+                setError("Error al registrar la venta");
+                console.error(err);
+            }
+        }
+
+           //Refrescamos lista de ventas
+           setFormData({producto: "", cantidad: "", precioUnitario: ""});
+        try{
             const res = await getAllVentas();
             setVentas(res.data);
-
-            setFormData({producto: "", cantidad: "", precioUnitario: ""});
-            
         }catch(err){
-            setError("Error al crear la venta");
+            setError("Error al cargar datos");
             console.error(err);
         }
+           
     };
+
+    const handleEdit = (venta) =>{
+        setEditId(venta._id);
+        setFormData({
+            producto: venta.producto._id,
+            cantidad: venta.cantidad,
+            precioUnitario: venta.precioUnitario
+        });
+    }
+
+    const handleCancel = () =>{
+        setEditId(null);
+        setFormData({
+            producto: "",
+            cantidad: "",
+            precioUnitario: ""
+        });
+    }
 
     //Filtros
 
@@ -132,7 +173,17 @@ const Ventas = () =>{
                     required
                 />
 
-                <button type="submit">Registrar</button>
+                <button type="submit">
+                    {editId ? "Actualizar venta" : "Registrar venta"}
+                </button>
+                {editId &&(
+                    <button
+                    type="button"
+                    className="btn-cancelar"
+                    onClick={handleCancel}>
+                        Cancelar Edición
+                    </button>
+                )}
 
             </form>
 
@@ -185,6 +236,7 @@ const Ventas = () =>{
                         <th>Precio Unitario</th>
                         <th>Total</th>
                         <th>Fecha</th>
+                        <th>Accion</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -195,6 +247,7 @@ const Ventas = () =>{
                                 <td>{v.precioUnitario}</td>
                                 <td>{v.cantidad * v.precioUnitario}</td>
                                 <td>{new Date(v.fecha).toLocaleString()}</td>
+                                <td><button onClick={() => handleEdit(v)} className="btn-editar">Editar</button></td>
                             </tr>
                         ))}
                     </tbody>

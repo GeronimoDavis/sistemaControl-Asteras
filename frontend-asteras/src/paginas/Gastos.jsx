@@ -1,4 +1,7 @@
+import { useEffect, useState } from "react";
 
-export default function Gastos(){
-    return <h1>Gastos</h1>
+const Gastos = () =>{
+
 }
+
+export default Gastos;
