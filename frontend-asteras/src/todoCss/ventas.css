@@ -1,0 +1,241 @@
+.ventas-container {
+    max-width: 1200px;
+    margin: 120px auto 40px;
+    padding: 0 20px;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+.ventas-titulo {
+    color: #8a2be2;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 40px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.form-ventas {
+    background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border: 2px solid #8a2be2;
+}
+
+.form-ventas h2 {
+    color: #ffffff;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-ventas select,
+.form-ventas input[type="number"],
+.form-ventas input[type="text"] {
+    width: calc(100% - 44px); /* Adjusted for padding and border */
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    border: 2px solid #444;
+    border-radius: 10px;
+    background: #1a1a1a;
+    color: #ffffff;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-ventas select:focus,
+.form-ventas input[type="number"]:focus,
+.form-ventas input[type="text"]:focus {
+    outline: none;
+    border-color: #8a2be2;
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+    background: #2a2a2a;
+}
+
+.form-ventas select option {
+    background: #1a1a1a;
+    color: #ffffff;
+}
+
+.form-ventas button[type="submit"] {
+    background: linear-gradient(135deg, #8a2be2, #ac6eee);
+    color: #ffffff;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
+    width: 100%;
+    margin-top: 10px;
+}
+
+.form-ventas button[type="submit"]:hover {
+    background: linear-gradient(135deg, #ac6eee, #8a2be2);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(138, 43, 226, 0.4);
+}
+
+.filtros-ventas {
+    background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border: 2px solid #8a2be2;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.filtros-ventas label {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.filtros-ventas select,
+.filtros-ventas input[type="number"],
+.filtros-ventas input[type="text"] {
+    padding: 10px 15px;
+    border: 2px solid #444;
+    border-radius: 8px;
+    background: #1a1a1a;
+    color: #ffffff;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    flex: 1; /* Allow items to grow */
+    min-width: 150px; /* Minimum width for filter inputs */
+}
+
+.filtros-ventas select:focus,
+.filtros-ventas input[type="number"]:focus,
+.filtros-ventas input[type="text"]:focus {
+    outline: none;
+    border-color: #8a2be2;
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+    background: #2a2a2a;
+}
+
+.ventas-table-container {
+    background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border: 2px solid #8a2be2;
+    overflow-x: auto; /* Enable horizontal scrolling for tables on small screens */
+}
+
+.ventas-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.ventas-table thead {
+    background: linear-gradient(135deg, #8a2be2, #ac6eee);
+}
+
+.ventas-table th {
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 15px 20px;
+    text-align: center;
+    border-bottom: 2px solid #ac6eee;
+}
+
+.ventas-table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.ventas-table tbody tr:nth-child(even) {
+    background: rgba(138, 43, 226, 0.05);
+}
+
+.ventas-table tbody tr:hover {
+    background: rgba(138, 43, 226, 0.15);
+    transform: translateX(5px);
+}
+
+.ventas-table td {
+    color: #ffffff;
+    font-size: 1rem;
+    padding: 12px 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(138, 43, 226, 0.2);
+}
+
+.ventas-table td:first-child {
+    text-align: left;
+    font-weight: 500;
+}
+
+.mensaje-vacio {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    padding: 40px;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .ventas-container {
+        margin-top: 100px;
+        padding: 0 15px;
+    }
+    
+    .ventas-titulo {
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+    
+    .form-ventas,
+    .filtros-ventas,
+    .ventas-table-container {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .form-ventas select,
+    .form-ventas input[type="number"],
+    .form-ventas input[type="text"] {
+        width: calc(100% - 40px);
+    }
+
+    .filtros-ventas {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filtros-ventas select,
+    .filtros-ventas input[type="number"],
+    .filtros-ventas input[type="text"] {
+        width: 100%;
+        min-width: unset;
+    }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.ventas-container {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.ventas-table tbody tr {
+    animation: fadeIn 0.4s ease-out;
+}

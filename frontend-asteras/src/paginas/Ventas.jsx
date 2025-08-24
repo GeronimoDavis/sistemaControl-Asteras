@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getAllVentas, createVentas, updateVentas, getAllProductos} from "../api"
+import "../todoCss/ventas.css";
 
 const Ventas = () =>{
     const [ventas, setVentas] = useState([]);
@@ -11,6 +12,15 @@ const Ventas = () =>{
         precioUnitario:""
     });
     const [producto, setProducto] = useState([]);
+
+    //estados para filtrar
+
+    const [mesSeleccionado, setMesSeleccionado] = useState(new Date().getMonth() + 1);
+
+    const [anioSeleccionado, setAnioSeleccionado] = useState(new Date().getFullYear());
+
+    const [busqueda, setBusqueda] = useState("");
+
 
     useEffect(() => {
         const fetchData = async () =>{
@@ -70,12 +80,27 @@ const Ventas = () =>{
         }
     };
 
+    //Filtros
+
+    const ventasFiltradas = ventas//guardamos el array de ventas en esta nueva variable para aplicarle filtros
+    .filter((v) => {
+        const fecha = new Date(v.fecha);
+        return(
+            fecha.getMonth() + 1 === parseInt(mesSeleccionado) &&
+            fecha.getFullYear() === parseInt(anioSeleccionado)//comparamos las fehas de los estados con todas las del array hasta que sean iguales
+        );
+    })
+    .filter((v) =>
+        v.producto?.nombre?.toLowerCase()
+        .includes(busqueda.trim().toLowerCase())//buscamos el producto del input que se guarda en busqueda 
+    );
+
     if (error) return <p>{error}</p>;
     
     return(
-        <div>
-            <h2>Registrar Venta</h2>
-            <form onSubmit={handleSubmit}>
+        <div className="ventas-container">
+            <h2 className="ventas-titulo">Registrar Venta</h2>
+            <form onSubmit={handleSubmit} className="form-ventas">
                 <select name="producto" 
                     value={formData.producto} 
                     onChange={handleChange} 
@@ -111,11 +136,48 @@ const Ventas = () =>{
 
             </form>
 
-            <h2>Lista de ventas</h2>
-            {ventas.length === 0 ? (
-                <p> No hay ventas registradas</p>
-            ):(
-                <table border="1" cellPadding="8">
+            <h2 className="ventas-titulo">Lista de ventas</h2>
+            
+            <div className="filtros-ventas">
+                <label>Mes: </label>
+                <select
+                value={mesSeleccionado}
+                onChange={(e) => setMesSeleccionado(Number(e.target.value))}>
+                    <option value="1">Enero</option>
+                    <option value="2">Febrero</option>
+                    <option value="3">Marzo</option>
+                    <option value="4">Abril</option>
+                    <option value="5">Mayo</option>
+                    <option value="6">Junio</option>
+                    <option value="7">Julio</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Septiembre</option>
+                    <option value="10">Octubre</option>
+                    <option value="11">Noviembre</option>
+                    <option value="12">Diciembre</option>
+                </select>
+
+                <label>Año: </label>
+                <input 
+                    type="number" 
+                    value={anioSeleccionado}
+                    onChange={(e) => setAnioSeleccionado(Number(e.target.value))}
+                />
+
+                <label> Buscar: </label>
+                <input
+                    type="text"
+                    placeholder="Producto..."
+                    value={busqueda}
+                    onChange={(e) => setBusqueda(e.target.value)}
+                />
+
+            </div>
+
+            {ventasFiltradas.length === 0 ? (
+                <p className="mensaje-vacio"> No hay ventas registradas</p>
+            ):( <div className="ventas-table-container">
+                <table className="ventas-table">
                     <thead>
                         <tr>
                         <th>Producto</th>
@@ -126,7 +188,7 @@ const Ventas = () =>{
                         </tr>
                     </thead>
                     <tbody>
-                        {ventas.map((v) => (
+                        {ventasFiltradas.map((v) => (
                             <tr key={v._id}>
                                 <td>{v.producto?.nombre || "No hay producto"}</td>
                                 <td>{v.cantidad}</td>
@@ -137,6 +199,7 @@ const Ventas = () =>{
                         ))}
                     </tbody>
                 </table>
+            </div>
             )}
         </div>
     )
