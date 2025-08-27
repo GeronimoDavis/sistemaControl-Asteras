@@ -1,0 +1,240 @@
+.gastos-container {
+  max-width: 1200px;
+  margin: 120px auto 40px;
+  padding: 0 20px;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.gastos-titulo {
+  color: #8a2be2;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 40px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.formulario-gasto,
+.filtros-gasto {
+  background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
+  border-radius: 15px;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  border: 2px solid #8a2be2;
+}
+
+.formulario-gasto h3,
+.filtros-gasto h3 {
+  color: #ffffff;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.input-grupo {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.input-gasto,
+.select-gasto,
+.input-filtro {
+  flex: 1;
+  min-width: 200px;
+  padding: 15px 20px;
+  border: 2px solid #444;
+  border-radius: 10px;
+  background: #1a1a1a;
+  color: #ffffff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.input-gasto:focus,
+.select-gasto:focus,
+.input-filtro:focus {
+  outline: none;
+  border-color: #8a2be2;
+  box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+  background: #2a2a2a;
+}
+
+.input-gasto::placeholder,
+.input-filtro::placeholder {
+  color: #888;
+}
+
+.btn-principal {
+  background: linear-gradient(135deg, #8a2be2, #ac6eee);
+  color: #ffffff;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
+  width: 100%;
+  margin-top: 10px;
+}
+
+.btn-principal:hover {
+  background: linear-gradient(135deg, #ac6eee, #8a2be2);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(138, 43, 226, 0.4);
+}
+
+.btn-cancelar {
+  background: linear-gradient(135deg, #444, #666);
+  color: #ffffff;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  margin-top: 10px;
+}
+
+.btn-cancelar:hover {
+  background: linear-gradient(135deg, #666, #444);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.lista-gastos {
+  background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  border: 2px solid #8a2be2;
+}
+
+.lista-gastos h3 {
+  color: #ffffff;
+  font-size: 1.3rem;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.mensaje-vacio {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  padding: 40px;
+}
+
+.gastos-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  color: #ffffff;
+}
+
+.gastos-table th,
+.gastos-table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #444;
+}
+
+.gastos-table th {
+  background-color: #8a2be2;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.gastos-table tr:hover {
+  background-color: rgba(138, 43, 226, 0.1);
+}
+
+.btn-editar {
+  background: linear-gradient(135deg, #ac6eee, #8a2be2);
+  color: #ffffff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(138, 43, 226, 0.3);
+}
+
+.btn-editar:hover {
+  background: linear-gradient(135deg, #8a2be2, #ac6eee);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.gastos-container {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.gastos-item {
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+  .gastos-container {
+    margin-top: 100px;
+    padding: 0 15px;
+  }
+  
+  .gastos-titulo {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+  
+  .formulario-gasto,
+  .filtros-gasto,
+  .lista-gastos {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .input-grupo {
+    flex-direction: column;
+  }
+  
+  .input-gasto,
+  .select-gasto,
+  .input-filtro {
+    min-width: auto;
+  }
+  
+  .gastos-table th,
+  .gastos-table td {
+    padding: 10px;
+    font-size: 0.9em;
+  }
+  
+  .btn-principal,
+  .btn-cancelar {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .btn-editar {
+    width: 100%;
+  }
+}
