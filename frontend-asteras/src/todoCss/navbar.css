@@ -1,5 +1,5 @@
 .navbar {
-  position: fixed; /* siempre arriba */
+  position: sticky; /* Se moverá con el scroll y se pegará arriba */
   top: 0;
   left: 0;
   width: 100%;

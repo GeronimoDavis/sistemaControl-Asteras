@@ -145,7 +145,8 @@ const Ventas = () =>{
                 <select name="producto" 
                     value={formData.producto} 
                     onChange={handleChange} 
-                    required>
+                    required
+                >
                 
                 <option value="">Seleccionar un producto</option>
                 {producto.map((p) => (
