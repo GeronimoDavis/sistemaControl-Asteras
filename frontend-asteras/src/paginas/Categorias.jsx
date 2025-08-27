@@ -31,7 +31,7 @@ const Categorias = () => {
                 setEditId(null);
                 setNombre("");
             }catch(err){
-                useState("No se pudo encontrar las categorias");
+                setError("No se pudo encontrar las categorias");
                 console.error(err);
                 setCategorias([]); // En caso de error, establecer array vacío
             }
