@@ -1,0 +1,13 @@
+{
+  "name": "sistemaControl-Asteras",
+  "version": "1.0.0",
+  "description": "Monorepo for Asteras control system",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx concurrently \"npm run dev --prefix backend-asteras\" \"npm run dev --prefix frontend-asteras\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
