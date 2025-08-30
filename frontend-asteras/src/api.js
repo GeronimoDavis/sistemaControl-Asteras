@@ -35,5 +35,9 @@ export const getGastoByid = (id) => API.get(`/gastos/${id}`)
 export const createGasto = (gastoData) => API.post(`/gastos`, gastoData);
 export const updateGastos = (id, gastoData) => API.put(`/gastos/${id}`, gastoData);
 
+//funciones de resumen
+export const getResumenMensual = (mes, anio) => API.get("/resumen/mensual", { params: { mes, anio } });
+export const getProductoMasVendido = (mes, anio) => API.get("/resumen/producto-mas-vendido", { params: { mes, anio } });
+export const getTopCategoriaGastos = (mes, anio) => API.get("/resumen/top-gastos-categorias", { params: { mes, anio } });
 
 export default API;

@@ -41,6 +41,7 @@ export const getResumenMensual = async (req, res) => {
         });
 
         const totalVentas = ventas.reduce((acc, venta) => acc + (venta.precioUnitario * venta.cantidad) , 0);//El reduce() recorre todas las ventas y acumula ese valor en acc, que empieza en 0
+        const cantidadDeVentas = ventas.length;
 
         //obtener los gastos del mes 
         const gastos = await Gastos.find({
@@ -57,7 +58,8 @@ export const getResumenMensual = async (req, res) => {
             anio,
             totalVentas,
             totalGastos,
-            ganancias: totalVentas - totalGastos
+            ganancias: totalVentas - totalGastos,
+            cantidadDeVentas
         })
 
     }catch(err) {
@@ -87,7 +89,7 @@ export const getProductoMasVendido = async (req, res) => {
                 cantidadTotal: { $sum: "$cantidad"}      
             }},//agrupa las ventas por producto y suma la cantidad de cada producto
             { $sort: { cantidadTotal: -1}},//ordena los productos de mayor a menor cantidad
-            { $limit: 1},//limita el resultado a 1 producto
+            { $limit: 5},//limita el resultado a 1 producto
             { $lookup:{
                 from: "productos",
                 localField: "_id",
@@ -104,10 +106,53 @@ export const getProductoMasVendido = async (req, res) => {
           ]);
 
           if(resultado.length === 0){
-            return res.status(404).json({message: "No se encontraron ventas en el mes especificado"})
+            return res.status(200).json([]);
           }
-          res.status(200).json(resultado[0]);//devuelve el producto más vendido y usamos [0] porque es un array de un solo elemento
+          res.status(200).json(resultado);
     }catch(err){
         res.status(500).json({message: "Error al obtener el producto más vendido", error: err.message});
     }
 }
+
+export const getTopCategoriaGastos = async (req, res) => {
+    try {
+        let { mes, anio } = req.query;
+        mes = parseInt(mes);
+        anio = parseInt(anio);
+
+        if (!mes || !anio || mes < 1 || mes > 12 || !Number.isInteger(mes) || !Number.isInteger(anio)) {
+            return res.status(400).json({ message: "Mes y año válidos son requeridos" });
+        }
+
+        const mesInicio = new Date(anio, mes - 1, 1);
+        const mesFin = new Date(anio, mes, 0, 23, 59, 59);
+
+        const resultado = await Gastos.aggregate([
+            { $match: { fecha: { $gte: mesInicio, $lte: mesFin } } },
+            { $group: {
+                _id: "$categoria",
+                totalMonto: { $sum: "$monto" }
+            }},
+            { $sort: { totalMonto: -1 }},
+            { $limit: 3 }, // Limitar a las 3 categorías con más gastos
+            { $lookup: {
+                from: "categorias", // Nombre de la colección de categorías de gastos
+                localField: "_id",
+                foreignField: "_id",
+                as: "categoriaInfo"
+            }},
+            { $unwind: "$categoriaInfo" },
+            { $project: {
+                _id: 0,
+                categoriaId: "$categoriaInfo._id",
+                nombre: "$categoriaInfo.nombre",
+                totalMonto: 1
+            }}
+        ]);
+
+        res.status(200).json(resultado);
+
+    } catch (err) {
+        res.status(500).json({ message: "Error al obtener las categorías de gastos principales", error: err.message });
+    }
+};
