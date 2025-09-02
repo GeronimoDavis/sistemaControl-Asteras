@@ -31,7 +31,7 @@ const Categorias = () => {
                 setEditId(null);
                 setNombre("");
             }catch(err){
-                const errorMessage = err.response?.data?.message || "No se pudo encontrar las categorias";
+                const errorMessage = err.response?.data?.message || "Error al cargar las categorias";
                 setError(errorMessage);
                 console.error(err);
                 setCategorias([]); // En caso de error, establecer array vacío
@@ -141,7 +141,7 @@ const Categorias = () => {
             {editId && (// render condicional con &&. Si editId existe, se muestra el botón Cancelar
               <button 
                 type="button" 
-                className="btn-secundario"
+                className="btn-cancelar"
                 onClick={() => { setEditId(null); setNombre(""); }}
               >
                 Cancelar

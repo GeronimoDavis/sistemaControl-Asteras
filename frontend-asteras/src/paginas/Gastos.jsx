@@ -169,6 +169,7 @@ const Gastos = () => {
             onChange={handleChange}
             className="input-gasto"
             required
+            autocomplete="off"
           />
 
           <input

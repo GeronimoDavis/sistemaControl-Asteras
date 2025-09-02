@@ -152,6 +152,7 @@ const Productos = () =>{
                             onChange={handleChange}
                             placeholder="Nombre del producto"
                             required
+                            autocomplete="off"
                         />
                     </div>
 

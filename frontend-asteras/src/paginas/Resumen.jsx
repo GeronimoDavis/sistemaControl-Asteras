@@ -30,8 +30,8 @@ const Resumen = () => {
                 setTopGastosCategorias(topGastosRes.data);
 
             } catch (err) {
-                console.error("Error al cargar datos del resumen:", err);
-                setError(err);
+                const errorMessage = err.response?.data?.message || "Error al cargar la informacion"
+                setError(errorMessage);
             }
             
         };
@@ -39,10 +39,16 @@ const Resumen = () => {
         fetchResumenData();
     }, [mesSeleccionado, anioSeleccionado]); // Se ejecuta cuando cambian mes o año
 
-    if (error) return <p style={{ color: 'red' }}>Error: {error.response?.data?.message || error.message || String(error)}</p>;
+    useEffect(()=>{
+        const timer = setTimeout(() =>{
+            setError("");
+        }, 5000)
+        return () => clearTimeout(timer);
+    })
 
     return (
         <div className="resumen-container">
+            {error && <p className="error-message">{error}</p>}
              <h2 className="resumen-titulo">Resumen Mensual</h2>
               {/* Filtros */}
             <div className="filtros-resumen">

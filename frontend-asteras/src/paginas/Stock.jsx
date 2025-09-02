@@ -15,7 +15,7 @@ const Stock = () =>{
             try{
                 const res = await getAllProductos();
                 setProductos(res.data || []);    
-            }catch(error){
+            }catch(err){
                 const errorMessage = err.response?.data?.message || "Error al cargar el stock";
                 setError(errorMessage);
                 console.error(error);
