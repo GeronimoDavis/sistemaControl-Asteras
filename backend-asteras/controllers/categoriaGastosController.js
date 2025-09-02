@@ -8,6 +8,10 @@ export const createCategoriaGasto = async (req, res) => {
         return res.status(400).json({ message: "El nombre de la categoría del gasto es obligatorio y debe ser una cadena de texto válida" });
     }
 
+    if(/^\d+$/.test(nombre)){
+        return res.status(400).json({ message: "El nombre de la categoría del gasto no puede contener solo números" });
+    }
+
     const existe = await Categoria.findOne({ nombre });
     if(existe){
         return res.status(400).json({ message: "La categoría del gasto ya existe" });
@@ -40,6 +44,9 @@ export const updateCategoriaGasto = async (req, res) => {
         if(!id || !mongoose.Types.ObjectId.isValid(id)){
             return res.status(400).json({ message: "ID de categoría no válido" });
 
+        }
+        if(/^\d+$/.test(nombre)){
+            return res.status(400).json({ message: "El nombre de la categoría del gasto no puede contener solo números" });
         }
 
         if(!nombre || typeof nombre !== "string" || nombre.trim() === ""){

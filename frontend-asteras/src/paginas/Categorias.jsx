@@ -31,7 +31,8 @@ const Categorias = () => {
                 setEditId(null);
                 setNombre("");
             }catch(err){
-                setError("No se pudo encontrar las categorias");
+                const errorMessage = err.response?.data?.message || "No se pudo encontrar las categorias";
+                setError(errorMessage);
                 console.error(err);
                 setCategorias([]); // En caso de error, establecer array vacío
             }
@@ -72,10 +73,9 @@ const Categorias = () => {
             setNombre("");
             setEditId(null);
         }catch (err) {
-            console.error("Error completo:", err);
-            console.error("Respuesta del servidor:", err.response);
-            console.error("Datos del error:", err.response?.data);
-            alert(err.response?.data?.message || "Error al guardar categoría");
+            const errorMessage = err.response?.data?.message || "Error al guardar categoría";
+            setError(errorMessage);
+            console.error(err);
         }
     };
 
@@ -85,10 +85,18 @@ const Categorias = () => {
         setEditId(categoria._id);
     }
 
-    if(error) return <p>{error}</p>;
+    useEffect(() => {
+        if(error){
+            const timer = setTimeout(() => {
+                setError("");
+            }, 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [error]);
     
     return(
     <div className="categorias-container">
+      {error && <p className="error-message">{error}</p>}
       <h2 className="categorias-titulo">Categorías</h2>
 
       <div className="tipo-selector">

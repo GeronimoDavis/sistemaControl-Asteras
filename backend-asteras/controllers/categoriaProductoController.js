@@ -9,6 +9,11 @@ export const createCategoriaProducto = async (req, res) =>{
         if(!nombre || typeof nombre !== "string" || nombre.trim() === ""){
             return res.status(400).json({ message: "El nombre de la categoría del producto es obligatorio y debe ser una cadena de texto válida" });
         }
+
+        if (/^\d+$/.test(nombre)) {
+            return res.status(400).json({ message: "El nombre de la categoría del producto no puede contener solo números" });
+        }
+
         const existe = await CategoriaProducto.findOne({ nombre });
         if(existe){
             return res.status(400).json({ message: "La categoría del producto ya existe" });
@@ -39,6 +44,10 @@ export const updateCategoriaProducto = async (req, res) => {
         //validaciones
         if(!id || !mongoose.Types.ObjectId.isValid(id)){
             return res.status(400).json({ message: "ID de categoría no válido" });
+        }
+
+        if (/^\d+$/.test(nombre)) {
+            return res.status(400).json({ message: "El nombre de la categoría del producto no puede contener solo números" });
         }
         if(!nombre || typeof nombre !== "string" || nombre.trim() === ""){
             return res.status(400).json({ message: "El nombre de la categoría del producto es obligatorio y debe ser una cadena de texto válida" });
