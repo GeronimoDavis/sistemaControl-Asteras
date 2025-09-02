@@ -13,6 +13,11 @@ export const createProducto = async (req, res) =>{
             return res.status(400).json({ message: "El nombre del producto es obligatorio y debe ser una cadena de texto válida" });
         }
 
+        //verificar si el nombre del producto no puede contener solo números
+        if (/^\d+$/.test(nombre)) {
+            return res.status(400).json({ message: "El nombre del producto no puede contener solo números" });
+        }
+
         if(stock == null || isNaN(stock) || stock < 0 || !Number.isInteger(stock)){
             return res.status(400).json({ message: "El stock del producto es obligatorio y debe ser un número entero mayor o igual a 0" });
         }
@@ -95,6 +100,10 @@ export const updateProducto = async (req, res) => {
 
         if(!nombre || typeof nombre !== "string" || nombre.trim() === ""){
             return res.status(400).json({ message: "El nombre del producto es obligatorio y debe ser una cadena de texto válida" });
+        }
+
+        if (/^\d+$/.test(nombre)) {
+            return res.status(400).json({ message: "El nombre del producto no puede contener solo números" });
         }
 
         if(stock == null || isNaN(stock) || stock < 0 || !Number.isInteger(stock)){

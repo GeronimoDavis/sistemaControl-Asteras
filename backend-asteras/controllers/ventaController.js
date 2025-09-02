@@ -26,7 +26,7 @@ export const createVenta = async (req, res) => {
 
         //validar que el stock sea suficiente
         if( productoExiste.stock < cantidad) {
-            return res.status(400).json({ message: "Stock insuficiente" });
+            return res.status(400).json({message: "Stock insuficiente"});
         }
 
 

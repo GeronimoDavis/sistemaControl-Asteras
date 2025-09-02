@@ -31,7 +31,9 @@ const Ventas = () =>{
                 const res = await getAllProductos();
                 setProducto(res.data);
             }catch(err){
-                setError("Error al cargar datos");
+                //accedemos a la respuesta del error y obtenemos el mensaje de error y si no existe se establece un mensaje por defecto
+                const errorMessage = err.response?.data?.message || "Error al cargar los datos";
+                setError(errorMessage);
                 console.error(err);
             }
         };
@@ -71,7 +73,8 @@ const Ventas = () =>{
                 setEditId(null);
 
             }catch(err){
-                setError("Error al actualizar la venta");
+                const errorMessage = err.response?.data?.message || "Error al actualizar la venta";
+                setError(errorMessage);
                 console.error(err);
             }
 
@@ -86,22 +89,35 @@ const Ventas = () =>{
                 await createVentas(dataToSend)
 
             }catch(err){
-                setError("Error al registrar la venta");
+                const errorMessage = err.response?.data?.message || "Error al registrar la venta";
+                setError(errorMessage);
                 console.error(err);
             }
         }
 
            //Refrescamos lista de ventas
            setFormData({producto: "", cantidad: "", precioUnitario: ""});
-        try{
+           if (!error) { // solo refrescar si no hay error
+            try{
             const res = await getAllVentas();
             setVentas(res.data);
-        }catch(err){
-            setError("Error al cargar datos");
+            }catch(err){
+            const errorMessage = err.response?.data?.message || "Error al cargar datos";
+            setError(errorMessage);
             console.error(err);
-        }
+            }
+           }
            
     };
+
+    useEffect(() => {
+        if (error) {
+            const timer = setTimeout(() => {
+                setError("");
+            }, 5000); //despues de 5 segundos, se limpia el error
+            return () => clearTimeout(timer);
+        }
+    }, [error]);
 
     const handleEdit = (venta) =>{
         setEditId(venta._id);
@@ -136,10 +152,10 @@ const Ventas = () =>{
         .includes(busqueda.trim().toLowerCase())//buscamos el producto del input que se guarda en busqueda 
     );
 
-    if (error) return <p>{error}</p>;
     
     return(
         <div className="ventas-container">
+            {error && <p className="error-message">{error}</p>}
             <h2 className="ventas-titulo">Registrar Venta</h2>
             <form onSubmit={handleSubmit} className="form-ventas">
                 <select name="producto" 

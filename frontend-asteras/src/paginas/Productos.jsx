@@ -30,7 +30,8 @@ const Productos = () =>{
                 setProductos(resProductos.data);
                 setCategorias(resCategorias.data);
             }catch(err){
-                setError("Error al cargar los productos");
+                const errorMessage = err.response?.data?.message || "Error al cargar los productos";
+                setError(errorMessage);
                 console.error(err);
             }
             
@@ -48,7 +49,8 @@ const Productos = () =>{
                 await updateProducto(editId, formData);
                 setEditId(null);
             }catch(err){
-                setError("Error al editar el producto");
+                const errorMessage = err.response?.data?.message || "Error al editar el producto";
+                setError(errorMessage);
                 console.error(err);
             }
 
@@ -63,11 +65,14 @@ const Productos = () =>{
                   };
                 await createProducto(dataToSend); 
             }catch(err){
-                setError("Error al crear el producto");
+                const errorMessage = err.response?.data?.message || "Error al crear el producto";
+                setError(errorMessage);
                 console.error(err);
             }
             
         }
+
+
 
         //Reset y recargar productos
         setFormData({
@@ -77,16 +82,28 @@ const Productos = () =>{
             precioVenta: 0,
             categoriaProducto: "",
         })
-        try{
-            const res = await getAllProductos();
-            setProductos(res.data);
-        }catch(err){
-            setError("Error al recargar los productos");
-            console.error(err);
+        if (!error) {
+            try{
+                const res = await getAllProductos();
+                setProductos(res.data);
+            }catch(err){
+                const errorMessage = err.response?.data?.message || "Error al recargar los productos";
+                setError(errorMessage);
+                console.error(err);
+            }
         }
-        
       
     }
+
+    useEffect(() => {
+        if(error){
+            const timer = setTimeout(() => {
+                setError("");
+            }, 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [error]);
+    
 
     const handleEdit = (producto) =>{
         setEditId(producto._id);
@@ -117,13 +134,12 @@ const Productos = () =>{
     };
 
 
-    if (error) return <p>{error}</p>;
-
     return(
         <div className="productos-container">
+            {error && <p className="error-message">{error}</p>}
+
             <h1 className="productos-titulo">{editId ? "Editar Producto" : "Crear Producto"}</h1>
             
-            {error && <div className="mensaje-error">{error}</div>}
             
             <div className="formulario-producto">
                 <h3>Información del Producto</h3>
