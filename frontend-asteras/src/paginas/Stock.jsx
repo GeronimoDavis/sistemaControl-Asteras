@@ -10,19 +10,19 @@ const Stock = () =>{
     const [editId, setEditId] = useState(null)
     
 
-    //traemos el stock
     useEffect(() =>{
         const fetchStock = async () =>{
             try{
                 const res = await getAllProductos();
                 setProductos(res.data || []);    
             }catch(error){
-                setError("No se pudo traer el stock")
+                const errorMessage = err.response?.data?.message || "Error al cargar el stock";
+                setError(errorMessage);
                 console.error(error);
             }
         };
         fetchStock();
-    },[]);// el segundo parametro [] significa que solo se ejecuta una vez cuando el componente se monta
+    },[]);// el segundo parametro [] que solo se ejecuta una vez cuando el componente se monta
 
     const handleSave = async (id) =>{
       try{
@@ -32,10 +32,20 @@ const Stock = () =>{
         );
         setEditId(null);
       }catch(err){
-        setError("Error al actualizar el stock");
+        const errorMessage = err.response?.data?.message || "Error al actualizar el stock"
+        setError(errorMessage);
         console.error(err);
       }
     }
+
+    useEffect(() =>{
+      if(error){
+        const timer = setTimeout(() =>{
+          setError("");
+        }, 5000);
+        return () => clearTimeout(timer);
+      }
+    }, [error])
 
     const handleEdit = (producto) =>{
       setEditId(producto._id)
@@ -53,10 +63,10 @@ const Stock = () =>{
     }
 
     // productosFiltrados es una variable que se calcula cada vez que el componente se renderiza
-    if(error) return  <p>{error}</p>;
 
     return(
         <div className="stock-container">
+          {error && <p className="error-message">{error}</p>}
             <h2 className="stock-titulo">Stock de Productos</h2>
 
             <div className="busqueda-container">
