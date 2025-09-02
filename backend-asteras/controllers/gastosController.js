@@ -10,6 +10,10 @@ export const createGasto = async (req, res) =>{
             return res.status(400).json({ message: "La descripción del gasto debe ser una cadena de texto válida" });
         }
 
+        if(/^\d+$/.test(descripcion)){
+            return res.status(400).json({ message: "La descripción del gasto no puede contener solo números" });
+        }
+
         if(monto == null || isNaN(monto) || monto <= 0){
             return res.status(400).json({ message: "El monto del gasto es obligatorio y debe ser un número mayor a 0" });
         }
@@ -69,6 +73,9 @@ export const updateGasto = async (req, res) => {
         //validaciones
         if(!mongoose.Types.ObjectId.isValid(id)){
             return res.status(400).json({ message: "ID de gasto no válido" });
+        }
+        if(/^\d+$/.test(descripcion)){
+            return res.status(400).json({ message: "La descripción del gasto no puede contener solo números" });
         }
 
         if(typeof descripcion !== "string" || descripcion.trim() === ""){

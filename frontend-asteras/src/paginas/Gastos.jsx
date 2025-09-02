@@ -36,7 +36,8 @@ const Gastos = () => {
         const resCategoria = await getCategoriasGastos();
         setCategoria(resCategoria.data);
       } catch (err) {
-        setError("Error al cargar datos");
+        const errorMessage = err.response?.data?.message || "Error al cargar datos";
+        setError(errorMessage);
         console.error(err);
       }
     };
@@ -56,7 +57,8 @@ const Gastos = () => {
         await updateGastos(editId, data);
         setEditId(null);
       } catch (err) {
-        setError("Error al editar los datos");
+        const errorMessage = err.response?.data?.message || "Error al editar los datos";
+        setError(errorMessage);
         console.error(err);
       }
     } else {
@@ -68,7 +70,8 @@ const Gastos = () => {
 
         await createGasto(data);
       } catch (err) {
-        setError("Error al crear registro");
+        const errorMessage = err.response?.data?.message || "Error al crear registro";
+        setError(errorMessage);
         console.error(err);
       }
     }
@@ -78,14 +81,26 @@ const Gastos = () => {
       monto: "",
       categoria: "",
     });
-    try {
-      const resGasto = await getAllGastos();
-      setGastos(resGasto.data);
-    } catch (err) {
-      setError("Error al cargar datos");
-      console.error(err);
+    if(editId){
+      try {
+        const resGasto = await getAllGastos();
+        setGastos(resGasto.data);
+      } catch (err) {
+        const errorMessage = err.response?.data?.message || "Error al cargar datos";
+        setError(errorMessage);
+        console.error(err);
+      }
     }
   };
+
+  useEffect(() => {
+    if(error){
+      const timer = setTimeout(() =>{
+        setError("");
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
 
   const handleEdit = (gasto) => {
     setEditId(gasto._id);
@@ -124,10 +139,10 @@ const Gastos = () => {
         g.categoria?.nombre?.toLowerCase().includes(busqueda.trim().toLowerCase())
     );
 
-  if (error) return <p>{error}</p>;
 
   return (
     <div className="gastos-container">
+      {error && <p className="error-message">{error}</p>}
       <h2 className="gastos-titulo">Registrar Gasto</h2>
       <form onSubmit={handleSubmit} className="formulario-gasto">
         <div className="input-grupo">
