@@ -55,7 +55,7 @@ const Gastos = () => {
         };
 
         await updateGastos(editId, data);
-        setEditId(null);
+
       } catch (err) {
         const errorMessage = err.response?.data?.message || "Error al editar los datos";
         setError(errorMessage);
@@ -74,22 +74,23 @@ const Gastos = () => {
         setError(errorMessage);
         console.error(err);
       }
-    }
 
+    }
     setFormData({
       descripcion: "",
       monto: "",
       categoria: "",
     });
-    if(editId){
-      try {
-        const resGasto = await getAllGastos();
-        setGastos(resGasto.data);
-      } catch (err) {
-        const errorMessage = err.response?.data?.message || "Error al cargar datos";
-        setError(errorMessage);
-        console.error(err);
-      }
+    setEditId(null); // Limpiar el editId para salir del modo edición
+    
+    // Actualizar la lista de gastos después de crear o editar
+    try {
+      const resGasto = await getAllGastos();
+      setGastos(resGasto.data);
+    } catch (err) {
+      const errorMessage = err.response?.data?.message || "Error al cargar datos";
+      setError(errorMessage);
+      console.error(err);
     }
   };
 
