@@ -15,7 +15,7 @@ dotenv.config();//variables del archivo .env
 
 const app = express();//instancia de express
 app.use(cors({
-    origin: "http://localhost:5174",//frontend permitido
+    origin: "http://localhost:5173",//frontend permitido
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
