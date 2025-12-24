@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getResumenMensual, getProductoMasVendido, getTopCategoriaGastos, getAllProductos } from "../api";
+import { getResumenMensual, getProductoMasVendido, getTopCategoriaGastos } from "../api";
 import "../todoCss/resumen.css";
 
 
@@ -8,7 +8,6 @@ const Resumen = () => {
     const [resumenMensual, setResumenMensual] = useState(null);
     const [productoMasVendido, setProductoMasVendido] = useState([]);
     const [topGastosCategorias, setTopGastosCategorias] = useState([]);
-    const [totalInvertido, setTotalInvertido] = useState(null);
 
     // Estados para los filtros de fecha
     const [mesSeleccionado, setMesSeleccionado] = useState(new Date().getMonth() + 1);
@@ -46,23 +45,6 @@ const Resumen = () => {
         }, 5000)
         return () => clearTimeout(timer);
     })
-
-    const calcularTotalInvertido = async () => {
-        try {
-            const response = await getAllProductos();
-            const productos = response.data;
-            
-            // Calcular el total invertido: suma de (precioCompra * stock) de cada producto
-            const total = productos.reduce((suma, producto) => {
-                return suma + (producto.precioCompra * producto.stock);
-            }, 0);
-            
-            setTotalInvertido(total.toFixed(2));
-        } catch (err) {
-            const errorMessage = err.response?.data?.message || "Error al calcular el total invertido";
-            setError(errorMessage);
-        }
-    };
 
     return (
         <div className="resumen-container">
@@ -103,23 +85,6 @@ const Resumen = () => {
                     <p><strong>Promedio de Venta:</strong> ${(resumenMensual.totalVentas / resumenMensual.cantidadDeVentas).toFixed(2)}</p> {/* Se redondea a dos decimales*/}
                 </div>
                )}
-               {/* Total Invertido */}
-               <div className="resumen-seccion">
-                    <h3>Total Invertido en Inventario</h3>
-                    <div className="total-invertido-container">
-                        <button 
-                            className="btn-calcular-total" 
-                            onClick={calcularTotalInvertido}
-                        >
-                            Calcular Total Invertido
-                        </button>
-                        {totalInvertido !== null && (
-                            <p className="total-invertido-resultado">
-                                <strong>Total Invertido:</strong> ${totalInvertido}
-                            </p>
-                        )}
-                    </div>
-                </div>
                {/* Producto más vendido */}
                {productoMasVendido.length > 0 && (
                 <div className="resumen-seccion">

@@ -43,10 +43,18 @@ const Productos = () =>{
     const handleSubmit = async (e) =>{
         e.preventDefault();
        
+        // Convertir valores numéricos tanto para crear como para editar
+        const dataToSend = {
+            ...formData,//Copia todas las propiedades de formData en un nuevo objeto y las propiedades stock, precioCompra y precioVenta se sobrescriben con sus versiones convertidas a número
+            stock: Number(formData.stock),//vienen como string del input, los convertimos a Number
+            precioCompra: Number(formData.precioCompra),
+            precioVenta: Number(formData.precioVenta),
+        };
+
         if(editId){
             //editar
             try{
-                await updateProducto(editId, formData);
+                await updateProducto(editId, dataToSend);
                 setEditId(null);
             }catch(err){
                 const errorMessage = err.response?.data?.message || "Error al editar el producto";
@@ -57,12 +65,6 @@ const Productos = () =>{
         }else{
             //crear
             try{
-                const dataToSend = {
-                    ...formData,//Copia todas las propiedades de formData en un nuevo objeto y las propiedades stock, precioCompra y precioVenta se sobrescriben con sus versiones convertidas a número
-                    stock: Number(formData.stock),//vienen como string del input, los convertimos a Number
-                    precioCompra: Number(formData.precioCompra),
-                    precioVenta: Number(formData.precioVenta),
-                  };
                 await createProducto(dataToSend); 
             }catch(err){
                 const errorMessage = err.response?.data?.message || "Error al crear el producto";
